@@ -1,20 +1,23 @@
-import { useRecipeStore } from '../store/recipeStore';
+// src/components/FavouritesList.jsx
+import useRecipeStore from './recipeStore';
 
-const FavoritesList = () => {
-  const favorites = useRecipeStore((s) =>
-    s.favorites.map((id) => s.recipes.find((r) => r.id === id))
-  );
+const FavouritesList = () => {
+  const favourites = useRecipeStore((state) => state.favourites);
+
+  if (favourites.length === 0) {
+    return <p>No favourites yet. Mark some recipes as favourites!</p>;
+  }
 
   return (
     <div>
-      <h2>My Favorites</h2>
-      {favorites.map((r) => (
-        <div key={r.id}>
-          <h3>{r.title}</h3>
-        </div>
-      ))}
+      <h2>My Favourites</h2>
+      <ul>
+        {favourites.map((recipe) => (
+          <li key={recipe.id}>{recipe.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default FavoritesList;
+export default FavouritesList;
